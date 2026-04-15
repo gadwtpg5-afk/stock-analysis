@@ -8,19 +8,19 @@
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
 <style>
 :root {
-  --bg: #0d0f12;
-  --surface: #161a20;
-  --surface2: #1e242c;
-  --border: #2a3040;
-  --text: #e8ecf0;
-  --muted: #6b7585;
-  --accent-blue: #3b82f6;
+  --bg: #f8f9fa;
+  --surface: #ffffff;
+  --surface2: #f1f5f9;
+  --border: #e2e6ea;
+  --text: #1a1d21;
+  --muted: #6b7280;
+  --accent-blue: #1d4ed8;
   --accent-green: #22c55e;
   --accent-amber: #f59e0b;
   --accent-purple: #a78bfa;
   --accent-red: #ef4444;
   --accent-teal: #14b8a6;
-  --up: #f87171;
+  --up: #dc2626;
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -37,7 +37,7 @@ a { color: var(--accent-blue); text-decoration: none; }
 a:hover { text-decoration: underline; }
 
 /* ===== HEADER ===== */
-header {
+header { background: var(--surface);
   border-bottom: 1px solid var(--border);
   padding: 0 24px;
 }
@@ -152,7 +152,7 @@ header {
   padding: 16px 18px;
   margin-bottom: 10px;
 }
-.theme-card-header {
+.theme-card-header { background: var(--surface);
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
@@ -211,11 +211,11 @@ header {
 .risk-note {
   margin-top: 8px;
   padding: 6px 10px;
-  background: rgba(239,68,68,.07);
-  border-left: 2px solid var(--accent-red);
+  background: rgba(220,38,38,.06);
+  border-left: 2px solid #dc2626;
   border-radius: 0 4px 4px 0;
   font-size: 12px;
-  color: #f87171;
+  color: #b91c1c;
   line-height: 1.5;
 }
 
@@ -359,7 +359,7 @@ header {
 }
 .caution-title {
   font-size: 11px;
-  color: #f87171;
+  color: #b91c1c;
   font-family: 'IBM Plex Mono', monospace;
   margin-bottom: 8px;
 }
@@ -380,7 +380,7 @@ footer {
 <header>
   <div class="header-inner">
     <span class="site-name">JP-STOCK RADAR</span>
-    <a href="index.html" class="nav-back">← 日付一覧へ</a>
+    <a href="2026-04.html" class="nav-back">← 日付一覧へ</a>
   </div>
 </header>
 

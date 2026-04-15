@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>JP-STOCK RADAR — 日本株 値上がり分析</title>
+<title>2026年4月 — JP-STOCK RADAR</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
 <style>
@@ -15,23 +15,24 @@
   --text: #1a1d21;
   --muted: #6b7280;
   --accent: #1d4ed8;
-  --accent-light: #eff6ff;
+  --up: #dc2626;
 }
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body { background: var(--bg); color: var(--text); font-family: 'Noto Sans JP', sans-serif; font-size: 14px; line-height: 1.6; }
 a { color: inherit; text-decoration: none; }
 
 header { background: var(--surface); border-bottom: 1px solid var(--border); padding: 0 24px; }
-.header-inner { max-width: 800px; margin: 0 auto; height: 54px; display: flex; align-items: center; }
+.header-inner { max-width: 800px; margin: 0 auto; height: 54px; display: flex; align-items: center; justify-content: space-between; }
 .site-name { font-family: 'IBM Plex Mono', monospace; font-size: 14px; font-weight: 600; color: var(--accent); letter-spacing: .06em; }
+.nav-back { font-size: 12px; color: var(--muted); display: flex; align-items: center; gap: 4px; }
+.nav-back:hover { color: var(--accent); }
 
-.hero { background: var(--surface); border-bottom: 1px solid var(--border); padding: 36px 24px 32px; }
+.hero { background: var(--surface); border-bottom: 1px solid var(--border); padding: 32px 24px 28px; }
 .hero-inner { max-width: 800px; margin: 0 auto; }
-.hero h1 { font-size: 22px; font-weight: 700; margin-bottom: 6px; }
-.hero p { color: var(--muted); font-size: 13px; }
+.hero-eyebrow { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--muted); letter-spacing: .1em; margin-bottom: 6px; }
+.hero h1 { font-size: 22px; font-weight: 700; }
 
 .list-wrap { max-width: 800px; margin: 0 auto; padding: 28px 24px; }
-
 .section-label {
   font-family: 'IBM Plex Mono', monospace;
   font-size: 10px;
@@ -45,27 +46,23 @@ header { background: var(--surface); border-bottom: 1px solid var(--border); pad
 }
 .section-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
 
-/* 年月カード */
-.month-card {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  margin-bottom: 10px;
-  overflow: hidden;
-  transition: border-color .15s, box-shadow .15s;
-}
-.month-card:hover { border-color: var(--border-hover); box-shadow: 0 1px 4px rgba(0,0,0,.06); }
-
-.month-link {
+/* 日付カード */
+.day-link {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 16px 18px;
+  padding: 14px 18px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  margin-bottom: 8px;
+  transition: border-color .15s, box-shadow .15s;
 }
-.month-label { font-size: 15px; font-weight: 700; color: var(--text); }
-.month-sub { font-size: 12px; color: var(--muted); margin-top: 2px; }
-.month-arrow { color: var(--muted); font-size: 16px; transition: color .15s; }
-.month-card:hover .month-arrow { color: var(--accent); }
+.day-link:hover { border-color: var(--border-hover); box-shadow: 0 1px 4px rgba(0,0,0,.06); }
+.day-date { font-family: 'IBM Plex Mono', monospace; font-size: 13px; font-weight: 600; color: var(--accent); }
+.day-meta { font-size: 12px; color: var(--muted); margin-top: 2px; }
+.day-arrow { color: var(--muted); font-size: 15px; }
+.day-link:hover .day-arrow { color: var(--accent); }
 
 footer { border-top: 1px solid var(--border); padding: 20px 24px; text-align: center; font-size: 11px; color: var(--muted); margin-top: 40px; }
 </style>
@@ -75,40 +72,37 @@ footer { border-top: 1px solid var(--border); padding: 20px 24px; text-align: ce
 <header>
   <div class="header-inner">
     <span class="site-name">JP-STOCK RADAR</span>
+    <a href="index.html" class="nav-back">← 一覧に戻る</a>
   </div>
 </header>
 
 <div class="hero">
   <div class="hero-inner">
-    <h1>日本株 値上がり分析</h1>
-    <p>プライム・スタンダード・グロース 各市場の値上がり上位50銘柄を毎営業日分析。上昇理由の4分類判定と注目テーマを整理しています。</p>
+    <div class="hero-eyebrow">REPORT INDEX</div>
+    <h1>2026年 4月</h1>
   </div>
 </div>
 
 <div class="list-wrap">
-  <div class="section-label">レポート一覧</div>
+  <div class="section-label">日別レポート</div>
 
-  <!-- 新しい年月ほど上に追加 -->
-  <div class="month-card">
-    <a href="2026-04.html" class="month-link">
-      <div>
-        <div class="month-label">2026年 4月</div>
-        <div class="month-sub">1日分のレポートあり</div>
-      </div>
-      <div class="month-arrow">→</div>
-    </a>
-  </div>
+  <!-- 新しい日付ほど上に追加 -->
+  <a href="2026-04-14.html" class="day-link">
+    <div>
+      <div class="day-date">04月14日（火）</div>
+      <div class="day-meta">半導体・AI・非鉄全面高 / TSMC 1Q決算前夜</div>
+    </div>
+    <div class="day-arrow">→</div>
+  </a>
 
   <!--
-  <div class="month-card">
-    <a href="2026-05.html" class="month-link">
-      <div>
-        <div class="month-label">2026年 5月</div>
-        <div class="month-sub">〇日分のレポートあり</div>
-      </div>
-      <div class="month-arrow">→</div>
-    </a>
-  </div>
+  <a href="2026-04-15.html" class="day-link">
+    <div>
+      <div class="day-date">04月15日（水）</div>
+      <div class="day-meta">コメント</div>
+    </div>
+    <div class="day-arrow">→</div>
+  </a>
   -->
 
 </div>
