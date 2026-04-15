@@ -1,0 +1,791 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>日本株 値上がり分析 2026-04-15</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #f8f9fa;
+  --surface: #ffffff;
+  --surface2: #f1f5f9;
+  --border: #e2e6ea;
+  --text: #1a1d21;
+  --muted: #6b7280;
+  --accent-blue: #1d4ed8;
+  --accent-green: #22c55e;
+  --accent-amber: #f59e0b;
+  --accent-purple: #a78bfa;
+  --accent-red: #ef4444;
+  --accent-teal: #14b8a6;
+  --up: #dc2626;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Noto Sans JP', sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+a { color: var(--accent-blue); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+/* ===== HEADER ===== */
+header { background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  padding: 0 24px;
+}
+.header-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 56px;
+}
+.site-name {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--accent-blue);
+  letter-spacing: .05em;
+}
+.nav-back {
+  font-size: 12px;
+  color: var(--muted);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.nav-back:hover { color: var(--text); }
+
+/* ===== HERO ===== */
+.hero {
+  border-bottom: 1px solid var(--border);
+  padding: 32px 24px;
+}
+.hero-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+.date-tag {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 11px;
+  color: var(--accent-blue);
+  letter-spacing: .12em;
+  margin-bottom: 10px;
+}
+.hero h1 {
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 8px;
+  line-height: 1.3;
+}
+.hero-sub {
+  color: var(--muted);
+  font-size: 13px;
+}
+.summary-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 20px;
+}
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  border: 1px solid;
+}
+.pill-blue { border-color: var(--accent-blue); color: var(--accent-blue); }
+.pill-green { border-color: var(--accent-green); color: var(--accent-green); }
+.pill-amber { border-color: var(--accent-amber); color: var(--accent-amber); }
+.pill-purple { border-color: var(--accent-purple); color: var(--accent-purple); }
+
+/* ===== LAYOUT ===== */
+.main {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 32px 24px;
+  display: grid;
+  grid-template-columns: 1fr 300px;
+  gap: 28px;
+}
+@media (max-width: 768px) {
+  .main { grid-template-columns: 1fr; }
+}
+
+/* ===== SECTION ===== */
+.section { margin-bottom: 32px; }
+.section-label {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  letter-spacing: .14em;
+  color: var(--muted);
+  text-transform: uppercase;
+  margin-bottom: 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.section-label::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+
+/* ===== THEME CARDS ===== */
+.theme-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 16px 18px;
+  margin-bottom: 10px;
+}
+.theme-card-header { background: var(--surface);
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  gap: 12px;
+}
+.theme-rank {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: 10px;
+  color: var(--muted);
+  padding-top: 3px;
+  flex-shrink: 0;
+}
+.theme-title {
+  font-size: 14px;
+  font-weight: 700;
+  flex: 1;
+}
+.strength-dots {
+  display: flex;
+  gap: 3px;
+  flex-shrink: 0;
+  padding-top: 3px;
+}
+.sdot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--border);
+}
+.sdot.on { background: var(--accent-blue); }
+.theme-card[data-strength="5"] .sdot.on { background: var(--accent-blue); }
+.theme-card[data-strength="4"] .sdot.on { background: var(--accent-green); }
+.theme-card[data-strength="3"] .sdot.on { background: var(--accent-amber); }
+
+.tag-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin-bottom: 10px;
+}
+.tag {
+  font-size: 11px;
+  padding: 2px 7px;
+  border-radius: 3px;
+  background: var(--surface2);
+  color: var(--muted);
+  border: 1px solid var(--border);
+}
+.theme-desc {
+  font-size: 13px;
+  color: #374151;
+  line-height: 1.65;
+}
+.theme-desc strong { color: #111827; font-weight: 700; text-decoration: underline; text-underline-offset: 3px; text-decoration-color: #1d4ed8; text-decoration-thickness: 2px; }
+.risk-note {
+  margin-top: 8px;
+  padding: 6px 10px;
+  background: rgba(220,38,38,.06);
+  border-left: 2px solid #dc2626;
+  border-radius: 0 4px 4px 0;
+  font-size: 12px;
+  color: #b91c1c;
+  line-height: 1.5;
+}
+
+/* ===== TABLE ===== */
+.ranking-tabs {
+  display: flex;
+  gap: 0;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 16px;
+}
+.tab-btn {
+  padding: 8px 16px;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--muted);
+  border: none;
+  background: none;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  font-family: 'Noto Sans JP', sans-serif;
+  transition: color .15s;
+}
+.tab-btn.active {
+  color: var(--text);
+  border-bottom-color: var(--accent-blue);
+}
+.tab-panel { display: none; }
+.tab-panel.active { display: block; }
+
+.rank-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12px;
+}
+.rank-table th {
+  text-align: left;
+  padding: 6px 8px;
+  color: var(--muted);
+  font-weight: 500;
+  border-bottom: 1px solid var(--border);
+  white-space: nowrap;
+}
+.rank-table td {
+  padding: 7px 8px;
+  border-bottom: 1px solid rgba(42,48,64,.7);
+  vertical-align: top;
+}
+.rank-table tr:last-child td { border-bottom: none; }
+.rank-num {
+  font-family: 'IBM Plex Mono', monospace;
+  color: var(--muted);
+  font-size: 11px;
+}
+.stock-code {
+  font-family: 'IBM Plex Mono', monospace;
+  color: var(--muted);
+  font-size: 11px;
+}
+.stock-name { color: var(--text); }
+.rate { color: var(--up); font-weight: 600; font-family: 'IBM Plex Mono', monospace; }
+.badge {
+  display: inline-block;
+  padding: 1px 6px;
+  border-radius: 3px;
+  font-size: 10px;
+  font-weight: 600;
+}
+.b-k { background: rgba(59,130,246,.15); color: #60a5fa; }
+.b-t { background: rgba(34,197,94,.12); color: #4ade80; }
+.b-n { background: rgba(245,158,11,.12); color: #fbbf24; }
+.b-r { background: rgba(167,139,250,.12); color: #c4b5fd; }
+.reason-text { color: #374151; font-size: 12px; }
+.reason-text strong { font-weight: 700; text-decoration: underline; text-underline-offset: 2px; text-decoration-color: #374151; }
+
+/* ===== SIDEBAR ===== */
+.sidebar {}
+.stat-block {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 14px 16px;
+  margin-bottom: 12px;
+}
+.stat-block-title {
+  font-size: 11px;
+  color: var(--muted);
+  margin-bottom: 12px;
+  font-family: 'IBM Plex Mono', monospace;
+  letter-spacing: .08em;
+}
+.stat-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 4px 0;
+  border-bottom: 1px solid var(--border);
+}
+.stat-row:last-child { border-bottom: none; }
+.stat-label { font-size: 12px; color: var(--muted); }
+.stat-val { font-family: 'IBM Plex Mono', monospace; font-size: 13px; font-weight: 600; }
+.stat-val.up { color: var(--up); }
+.stat-val.blue { color: var(--accent-blue); }
+
+.market-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 14px 16px;
+  margin-bottom: 12px;
+}
+.market-label {
+  font-size: 10px;
+  color: var(--muted);
+  letter-spacing: .1em;
+  font-family: 'IBM Plex Mono', monospace;
+  margin-bottom: 8px;
+}
+.market-bar-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 6px;
+  font-size: 12px;
+}
+.bar-label { color: var(--muted); width: 64px; flex-shrink: 0; }
+.bar-track {
+  flex: 1;
+  height: 6px;
+  background: var(--surface2);
+  border-radius: 3px;
+  overflow: hidden;
+}
+.bar-fill { height: 100%; border-radius: 3px; }
+.bar-count { color: var(--text); font-family: 'IBM Plex Mono', monospace; width: 20px; text-align: right; }
+
+.caution-block {
+  background: rgba(239,68,68,.05);
+  border: 1px solid rgba(239,68,68,.2);
+  border-radius: 8px;
+  padding: 14px 16px;
+  margin-bottom: 12px;
+}
+.caution-title {
+  font-size: 11px;
+  color: #b91c1c;
+  font-family: 'IBM Plex Mono', monospace;
+  margin-bottom: 8px;
+}
+.caution-text { font-size: 12px; color: #374151; line-height: 1.65; }
+
+/* ===== FOOTER ===== */
+footer {
+  border-top: 1px solid var(--border);
+  padding: 20px 24px;
+  text-align: center;
+  font-size: 11px;
+  color: var(--muted);
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <span class="site-name">JP-STOCK RADAR</span>
+    <a href="../2026-04.html" class="nav-back">← 日付一覧へ</a>
+  </div>
+</header>
+
+<div class="hero">
+  <div class="hero-inner">
+    <div class="date-tag">2026 / 04 / 15 &nbsp;|&nbsp; PRIME · STANDARD · GROWTH</div>
+    <h1>3市場 値上がり3%以上銘柄 分析レポート</h1>
+    <p class="hero-sub">プライム・スタンダード・グロース各市場の値上がり率3%以上の銘柄を対象に、上昇理由を4分類で判定し注目テーマを整理</p>
+    <div class="summary-pills">
+      <span class="pill pill-blue">決算シーズン 本格化</span>
+      <span class="pill pill-green">ベイカレント 決算サプライズ</span>
+      <span class="pill pill-amber">TSMC決算 翌日待ち</span>
+      <span class="pill pill-purple">内需・医薬品 幅広く上昇</span>
+    </div>
+  </div>
+</div>
+
+<div class="main">
+  <!-- LEFT COLUMN -->
+  <div class="content">
+
+    <!-- 注目テーマ -->
+    <div class="section">
+      <div class="section-label">注目テーマ &amp; 今後の見通し</div>
+
+      <div class="theme-card" data-strength="5">
+        <div class="theme-card-header">
+          <span class="theme-rank">01</span>
+          <span class="theme-title">決算サプライズ（IT・コンサル・SaaS）</span>
+          <div class="strength-dots">
+            <div class="sdot on"></div><div class="sdot on"></div><div class="sdot on"></div><div class="sdot on"></div><div class="sdot on"></div>
+          </div>
+        </div>
+        <div class="tag-row">
+          <span class="tag">ベイカレント</span><span class="tag">マネーフォワード</span><span class="tag">ラクス</span><span class="tag">富士通</span><span class="tag">野村総研</span><span class="tag">TIS</span><span class="tag">Sansan</span><span class="tag">GMO-PG</span>
+        </div>
+        <div class="theme-desc">
+          4/15は決算シーズン本格入りの号砲となった日。<strong>ベイカレントが27/2期営業利益+27.2%増益予想＋300億円自社株買いを発表してストップ高</strong>、マネーフォワードも前日引け後の好決算で+18%急騰。コンサル・SaaS系は「AI需要がリアルな数字になってきた」と市場が評価し始めている。
+        </div>
+        <div class="risk-note">リスク：好決算でも翌日以降に「材料出尽くし」売りが出るケースは多い。特に上昇率10%超の銘柄は翌日の寄り付きで注意</div>
+      </div>
+
+      <div class="theme-card" data-strength="4">
+        <div class="theme-card-header">
+          <span class="theme-rank">02</span>
+          <span class="theme-title">医薬品（肥満症・新薬パイプライン）</span>
+          <div class="strength-dots">
+            <div class="sdot on"></div><div class="sdot on"></div><div class="sdot on"></div><div class="sdot on"></div><div class="sdot"></div>
+          </div>
+        </div>
+        <div class="tag-row">
+          <span class="tag">住友ファーマ</span><span class="tag">第一三共</span><span class="tag">エーザイ</span><span class="tag">アステラス</span><span class="tag">持田製薬</span><span class="tag">JCRファーマ</span>
+        </div>
+        <div class="theme-desc">
+          住友ファーマ（+7.71%）を筆頭に医薬品セクターが全面高。<strong>肥満症治療薬・ADC（抗体薬物複合体）開発への期待が国内製薬全般に波及</strong>している。エーザイのアルツハイマー薬、第一三共のADCなど個別パイプラインへの注目も継続。
+        </div>
+        <div class="risk-note">リスク：臨床試験の失敗・承認遅延で急落する可能性。個別材料の精査が必要</div>
+      </div>
+
+      <div class="theme-card" data-strength="4">
+        <div class="theme-card-header">
+          <span class="theme-rank">03</span>
+          <span class="theme-title">内需消費回復（小売・アミューズメント）</span>
+          <div class="strength-dots">
+            <div class="sdot on"></div><div class="sdot on"></div><div class="sdot on"></div><div class="sdot on"></div><div class="sdot"></div>
+          </div>
+        </div>
+        <div class="tag-row">
+          <span class="tag">ニトリHD</span><span class="tag">良品計画</span><span class="tag">ラウンドワン</span><span class="tag">アークランズ</span><span class="tag">イオンファンタジー</span><span class="tag">ジンズHD</span>
+        </div>
+        <div class="theme-desc">
+          円安一服・賃上げ継続を背景に<strong>内需消費関連が決算好調で広範に上昇</strong>。ニトリは円安影響の緩和、良品計画は訪日客需要でそれぞれ採算改善。アミューズメント系も内需・インバウンド双方が追い風。
+        </div>
+        <div class="risk-note">リスク：円安再加速によるコスト増、消費者マインド悪化</div>
+      </div>
+
+      <div class="theme-card" data-strength="3">
+        <div class="theme-card-header">
+          <span class="theme-rank">04</span>
+          <span class="theme-title">国産AI・DX政策（クラウド・SaaS）</span>
+          <div class="strength-dots">
+            <div class="sdot on"></div><div class="sdot on"></div><div class="sdot on"></div><div class="sdot"></div><div class="sdot"></div>
+          </div>
+        </div>
+        <div class="tag-row">
+          <span class="tag">さくらインターネット</span><span class="tag">NEC</span><span class="tag">ソフトバンクG</span><span class="tag">LINEヤフー</span><span class="tag">フィックスターズ</span><span class="tag">メドレー</span>
+        </div>
+        <div class="theme-desc">
+          4/13の国産AI新会社設立報道に続き政策追い風が継続。<strong>さくらインターネットは政府のAIクラウド指定事業者として需要拡大期待</strong>が根強い。ベイカレント好決算がDXコンサル全般への連想も呼んでいる。
+        </div>
+        <div class="risk-note">リスク：政策実行の遅れ、SBGはARM株・保有資産評価の変動リスク</div>
+      </div>
+
+      <div class="theme-card" data-strength="3">
+        <div class="theme-card-header">
+          <span class="theme-rank">05</span>
+          <span class="theme-title">電子部品（積層セラミックコンデンサ・半導体連想）</span>
+          <div class="strength-dots">
+            <div class="sdot on"></div><div class="sdot on"></div><div class="sdot on"></div><div class="sdot"></div><div class="sdot"></div>
+          </div>
+        </div>
+        <div class="tag-row">
+          <span class="tag">太陽誘電</span><span class="tag">日本ケミコン</span><span class="tag">村田製作所</span><span class="tag">エンプラス</span><span class="tag">メック</span>
+        </div>
+        <div class="theme-desc">
+          太陽誘電（+10.76%）の好決算が電子部品セクター全般への連想を呼んだ。<strong>AI・EVによる積層セラミックコンデンサ需要の回復が数字で確認され、村田製作所など大手への波及</strong>が鮮明。
+        </div>
+        <div class="risk-note">リスク：スマートフォン向け需要の鈍化、中国メーカーとの価格競争</div>
+      </div>
+
+    </div>
+
+    <!-- 銘柄別判定テーブル -->
+    <div class="section">
+      <div class="section-label">銘柄別 上昇理由判定（値上がり率3%以上）</div>
+      <div class="ranking-tabs">
+        <button class="tab-btn active" onclick="switchTab('prime', this)">プライム</button>
+        <button class="tab-btn" onclick="switchTab('standard', this)">スタンダード</button>
+        <button class="tab-btn" onclick="switchTab('growth', this)">グロース</button>
+      </div>
+
+      <div id="prime" class="tab-panel active">
+        <table class="rank-table">
+          <thead><tr><th>#</th><th>コード</th><th>銘柄</th><th>上昇率</th><th>判定</th><th>理由</th></tr></thead>
+          <tbody>
+            <tr><td class="rank-num">1</td><td class="stock-code">3994</td><td class="stock-name">マネーフォワード</td><td class="rate">+18.06%</td><td><span class="badge b-k">決算</span></td><td class="reason-text">引け後発表の<strong>好決算でクラウド会計ARR成長継続確認</strong>。市場予想大幅上回る</td></tr>
+            <tr><td class="rank-num">2</td><td class="stock-code">4413</td><td class="stock-name">ボードルア</td><td class="rate">+15.29%</td><td><span class="badge b-n">材料なし</span></td><td class="reason-text">低時価総額。出来高急増も明確な材料なし</td></tr>
+            <tr><td class="rank-num">3</td><td class="stock-code">6532</td><td class="stock-name">ベイカレント</td><td class="rate">+14.32%</td><td><span class="badge b-k">決算</span></td><td class="reason-text"><strong>26/2期営業利益+19.5%、27/2期+27.2%増益予想＋自社株買い300億円</strong>発表。ストップ高</td></tr>
+            <tr><td class="rank-num">4</td><td class="stock-code">3656</td><td class="stock-name">KLab</td><td class="rate">+11.97%</td><td><span class="badge b-n">材料なし</span></td><td class="reason-text">ゲーム株。明確な材料なし。投機的動き</td></tr>
+            <tr><td class="rank-num">5</td><td class="stock-code">6976</td><td class="stock-name">太陽誘電</td><td class="rate">+10.76%</td><td><span class="badge b-k">決算</span></td><td class="reason-text">決算発表。<strong>AI・EV向け積層セラミックコンデンサ需要回復が数字で確認</strong></td></tr>
+            <tr><td class="rank-num">6</td><td class="stock-code">3923</td><td class="stock-name">ラクス</td><td class="rate">+10.71%</td><td><span class="badge b-k">決算</span></td><td class="reason-text"><strong>経費精算・電子請求書SaaSの好決算でARR成長継続確認</strong></td></tr>
+            <tr><td class="rank-num">7</td><td class="stock-code">7730</td><td class="stock-name">マニー</td><td class="rate">+10.05%</td><td><span class="badge b-k">決算</span></td><td class="reason-text">医療器具。<strong>好決算で増益確認</strong>。海外展開堅調</td></tr>
+            <tr><td class="rank-num">8</td><td class="stock-code">9229</td><td class="stock-name">サンウェルズ</td><td class="rate">+9.05%</td><td><span class="badge b-n">材料なし</span></td><td class="reason-text">介護サービス。明確な材料なし</td></tr>
+            <tr><td class="rank-num">9</td><td class="stock-code">4828</td><td class="stock-name">ビジネスエンジニアリング</td><td class="rate">+8.17%</td><td><span class="badge b-k">決算</span></td><td class="reason-text">製造業向けDXシステム。<strong>好決算でERPクラウド移行需要の旺盛さ確認</strong></td></tr>
+            <tr><td class="rank-num">10</td><td class="stock-code">4506</td><td class="stock-name">住友ファーマ</td><td class="rate">+7.71%</td><td><span class="badge b-t">テーマ</span></td><td class="reason-text"><strong>肥満症治療薬開発への期待</strong>。医薬品セクター全般高の牽引役</td></tr>
+            <tr><td class="rank-num">11</td><td class="stock-code">429A</td><td class="stock-name">テクセンドフォトマスク</td><td class="rate">+7.34%</td><td><span class="badge b-t">テーマ</span></td><td class="reason-text">半導体前工程。TSMC決算前夜の期待残存</td></tr>
+            <tr><td class="rank-num">12</td><td class="stock-code">4443</td><td class="stock-name">Sansan</td><td class="rate">+7.21%</td><td><span class="badge b-k">決算</span></td><td class="reason-text"><strong>AI活用DXへ転換進む好決算</strong>。SaaS株全般を牽引</td></tr>
+            <tr><td class="rank-num">13</td><td class="stock-code">6324</td><td class="stock-name">ハーモニック・ドライブ</td><td class="rate">+6.62%</td><td><span class="badge b-t">テーマ</span></td><td class="reason-text">精密減速機。<strong>ロボティクス・工場自動化需要テーマ</strong>直結</td></tr>
+            <tr><td class="rank-num">14</td><td class="stock-code">4373</td><td class="stock-name">シンプレクスHD</td><td class="rate">+6.57%</td><td><span class="badge b-t">テーマ</span></td><td class="reason-text">金融系IT・AI活用DX。ベイカレント連想でコンサル全般高</td></tr>
+            <tr><td class="rank-num">15</td><td class="stock-code">9880</td><td class="stock-name">イノテック</td><td class="rate">+6.50%</td><td><span class="badge b-r">連想</span></td><td class="reason-text">半導体商社。電気機器セクター高の連想</td></tr>
+            <tr><td class="rank-num">16</td><td class="stock-code">2980</td><td class="stock-name">SREホールディングス</td><td class="rate">+6.40%</td><td><span class="badge b-t">テーマ</span></td><td class="reason-text">不動産テック・AI査定。DXテーマ連動</td></tr>
+            <tr><td class="rank-num">17</td><td class="stock-code">4689</td><td class="stock-name">LINEヤフー</td><td class="rate">+6.15%</td><td><span class="badge b-t">テーマ</span></td><td class="reason-text">国産AI・DX政策。SBG連動＋AI全般高継続</td></tr>
+            <tr><td class="rank-num">18</td><td class="stock-code">6027</td><td class="stock-name">弁護士ドットコム</td><td class="rate">+6.05%</td><td><span class="badge b-t">テーマ</span></td><td class="reason-text">リーガルテック・AI活用。SaaS・情報通信全般高</td></tr>
+            <tr><td class="rank-num">19</td><td class="stock-code">6997</td><td class="stock-name">日本ケミコン</td><td class="rate">+5.82%</td><td><span class="badge b-r">連想</span></td><td class="reason-text">コンデンサー。<strong>太陽誘電決算好調を受けた電子部品連想買い</strong></td></tr>
+            <tr><td class="rank-num">20</td><td class="stock-code">7740</td><td class="stock-name">タムロン</td><td class="rate">+5.79%</td><td><span class="badge b-k">決算</span></td><td class="reason-text">光学レンズ。好決算。監視カメラ・車載向け需要堅調</td></tr>
+            <tr><td class="rank-num">21</td><td class="stock-code">9842</td><td class="stock-name">アークランズ</td><td class="rate">+5.67%</td><td><span class="badge b-k">決算</span></td><td class="reason-text">ホームセンター。好決算。内需消費回復を確認</td></tr>
+            <tr><td class="rank-num">22</td><td class="stock-code">9740</td><td class="stock-name">セントラル警備保障</td><td class="rate">+5.60%</td><td><span class="badge b-k">決算</span></td><td class="reason-text">警備。好決算。インフラ・施設警備の人材需要拡大</td></tr>
+            <tr><td class="rank-num">23</td><td class="stock-code">9601</td><td class="stock-name">松竹</td><td class="rate">+5.60%</td><td><span class="badge b-t">テーマ</span></td><td class="reason-text">エンタメ・コンテンツIP。<strong>訪日外国人増加・円安恩恵テーマ</strong></td></tr>
+            <tr><td class="rank-num">24</td><td class="stock-code">6961</td><td class="stock-name">エンプラス</td><td class="rate">+5.58%</td><td><span class="badge b-r">連想</span></td><td class="reason-text">ICソケット。太陽誘電・電気機器セクター連想</td></tr>
+            <tr><td class="rank-num">25</td><td class="stock-code">3778</td><td class="stock-name">さくらインターネット</td><td class="rate">+5.56%</td><td><span class="badge b-t">テーマ</span></td><td class="reason-text"><strong>政府AI指定クラウド事業者として国産AI政策追い風継続</strong></td></tr>
+            <tr><td class="rank-num">26</td><td class="stock-code">4385</td><td class="stock-name">メルカリ</td><td class="rate">+5.43%</td><td><span class="badge b-t">テーマ</span></td><td class="reason-text">フリマEC・フィンテック。情報通信・リユームテーマ</td></tr>
+            <tr><td class="rank-num">27</td><td class="stock-code">6501</td><td class="stock-name">日立製作所</td><td class="rate">+5.31%</td><td><span class="badge b-k">決算</span></td><td class="reason-text">好決算期待。<strong>DX・インフラ・AIソリューション全方位で受注拡大</strong></td></tr>
+            <tr><td class="rank-num">28</td><td class="stock-code">4819</td><td class="stock-name">デジタルガレージ</td><td class="rate">+5.10%</td><td><span class="badge b-r">連想</span></td><td class="reason-text">フィンテック・DX投資。情報通信テーマ連想</td></tr>
+            <tr><td class="rank-num">29</td><td class="stock-code">9519</td><td class="stock-name">レノバ</td><td class="rate">+5.05%</td><td><span class="badge b-t">テーマ</span></td><td class="reason-text">再エネ・洋上風力。エネルギー安全保障政策テーマ</td></tr>
+            <tr><td class="rank-num">30</td><td class="stock-code">4307</td><td class="stock-name">野村総合研究所</td><td class="rate">+4.90%</td><td><span class="badge b-k">決算</span></td><td class="reason-text">IT・コンサル。<strong>好決算でAI・DX案件の旺盛な受注継続確認</strong></td></tr>
+            <tr><td class="rank-num">31</td><td class="stock-code">3915</td><td class="stock-name">テラスカイ</td><td class="rate">+4.76%</td><td><span class="badge b-r">連想</span></td><td class="reason-text">Salesforce基盤SaaS。ベイカレント好決算のコンサル連想</td></tr>
+            <tr><td class="rank-num">32</td><td class="stock-code">9984</td><td class="stock-name">ソフトバンクG</td><td class="rate">+4.76%</td><td><span class="badge b-t">テーマ</span></td><td class="reason-text">AI投資・Arm連動。国産AI政策継続</td></tr>
+            <tr><td class="rank-num">33</td><td class="stock-code">9843</td><td class="stock-name">ニトリHD</td><td class="rate">+4.73%</td><td><span class="badge b-k">決算</span></td><td class="reason-text">好決算。<strong>円安一服で採算改善、内需回復が数字に反映</strong></td></tr>
+            <tr><td class="rank-num">34</td><td class="stock-code">9552</td><td class="stock-name">クオンツ総研HD</td><td class="rate">+4.69%</td><td><span class="badge b-n">材料なし</span></td><td class="reason-text">明確な材料なし</td></tr>
+            <tr><td class="rank-num">35</td><td class="stock-code">7383</td><td class="stock-name">ネットプロテクションズ</td><td class="rate">+4.60%</td><td><span class="badge b-t">テーマ</span></td><td class="reason-text">BNPL・フィンテック。情報通信テーマ連動</td></tr>
+            <tr><td class="rank-num">36</td><td class="stock-code">3687</td><td class="stock-name">フィックスターズ</td><td class="rate">+4.56%</td><td><span class="badge b-t">テーマ</span></td><td class="reason-text"><strong>GPU最適化・AI高速化ソリューション</strong>。AI実装テーマ直結</td></tr>
+            <tr><td class="rank-num">37</td><td class="stock-code">6701</td><td class="stock-name">NEC</td><td class="rate">+4.56%</td><td><span class="badge b-t">テーマ</span></td><td class="reason-text">国産AI政策・DX。政府向けAIインフラ受注期待継続</td></tr>
+            <tr><td class="rank-num">38</td><td class="stock-code">4534</td><td class="stock-name">持田製薬</td><td class="rate">+4.45%</td><td><span class="badge b-r">連想</span></td><td class="reason-text">医薬品。住友ファーマ急騰を受けた医薬品セクター連想</td></tr>
+            <tr><td class="rank-num">39</td><td class="stock-code">3922</td><td class="stock-name">PR TIMES</td><td class="rate">+4.43%</td><td><span class="badge b-r">連想</span></td><td class="reason-text">PRサービスSaaS。情報通信セクター全般高の連想</td></tr>
+            <tr><td class="rank-num">40</td><td class="stock-code">6981</td><td class="stock-name">村田製作所</td><td class="rate">+4.41%</td><td><span class="badge b-r">連想</span></td><td class="reason-text">積層セラミックコンデンサ大手。<strong>太陽誘電好決算を受けた同業連想</strong></td></tr>
+            <tr><td class="rank-num">41</td><td class="stock-code">4680</td><td class="stock-name">ラウンドワン</td><td class="rate">+4.35%</td><td><span class="badge b-k">決算</span></td><td class="reason-text">アミューズメント。好決算。内需・インバウンド双方が追い風</td></tr>
+            <tr><td class="rank-num">42</td><td class="stock-code">4902</td><td class="stock-name">コニカミノルタ</td><td class="rate">+4.34%</td><td><span class="badge b-k">決算</span></td><td class="reason-text">決算発表。<strong>構造改革・医療画像事業の回復期待</strong></td></tr>
+            <tr><td class="rank-num">43</td><td class="stock-code">6071</td><td class="stock-name">IBJ</td><td class="rate">+4.31%</td><td><span class="badge b-k">決算</span></td><td class="reason-text">婚活サービス。<strong>好決算で少子化対策政策との相乗効果確認</strong></td></tr>
+            <tr><td class="rank-num">44</td><td class="stock-code">6702</td><td class="stock-name">富士通</td><td class="rate">+4.25%</td><td><span class="badge b-k">決算</span></td><td class="reason-text">ITサービス。<strong>好決算でAI・クラウド事業の拡大を確認</strong></td></tr>
+            <tr><td class="rank-num">45</td><td class="stock-code">4480</td><td class="stock-name">メドレー</td><td class="rate">+4.18%</td><td><span class="badge b-t">テーマ</span></td><td class="reason-text">医療DX・人材SaaS。ヘルスケアDXテーマ</td></tr>
+            <tr><td class="rank-num">46</td><td class="stock-code">3939</td><td class="stock-name">カナミックネットワーク</td><td class="rate">+4.17%</td><td><span class="badge b-t">テーマ</span></td><td class="reason-text">介護DX。ヘルスケアDXテーマ連動</td></tr>
+            <tr><td class="rank-num">47</td><td class="stock-code">3769</td><td class="stock-name">GMOペイメントGW</td><td class="rate">+4.09%</td><td><span class="badge b-k">決算</span></td><td class="reason-text">決済SaaS。<strong>好決算でEC取扱高拡大継続確認</strong></td></tr>
+            <tr><td class="rank-num">48</td><td class="stock-code">4343</td><td class="stock-name">イオンファンタジー</td><td class="rate">+4.08%</td><td><span class="badge b-k">決算</span></td><td class="reason-text">アミューズメント。<strong>好決算でファミリー消費回復確認</strong></td></tr>
+            <tr><td class="rank-num">49</td><td class="stock-code">3626</td><td class="stock-name">TIS</td><td class="rate">+4.08%</td><td><span class="badge b-k">決算</span></td><td class="reason-text">ITサービス。<strong>好決算で金融・流通向けDX案件の旺盛さ確認</strong></td></tr>
+            <tr><td class="rank-num">50</td><td class="stock-code">8551</td><td class="stock-name">北日本銀行</td><td class="rate">+4.02%</td><td><span class="badge b-r">連想</span></td><td class="reason-text">地銀。金利上昇・利ざや拡大期待の連想</td></tr>
+            <tr><td class="rank-num">51</td><td class="stock-code">9424</td><td class="stock-name">日本通信</td><td class="rate">+4.00%</td><td><span class="badge b-n">材料なし</span></td><td class="reason-text">MVNO。明確な材料なし</td></tr>
+            <tr><td class="rank-num">52</td><td class="stock-code">4396</td><td class="stock-name">システムサポートHD</td><td class="rate">+3.99%</td><td><span class="badge b-r">連想</span></td><td class="reason-text">ITサービス。情報通信セクター全般高の連想</td></tr>
+            <tr><td class="rank-num">53</td><td class="stock-code">8151</td><td class="stock-name">東陽テクニカ</td><td class="rate">+3.98%</td><td><span class="badge b-r">連想</span></td><td class="reason-text">電子計測機器商社。電気機器セクター連想</td></tr>
+            <tr><td class="rank-num">54</td><td class="stock-code">3608</td><td class="stock-name">TSIホールディングス</td><td class="rate">+3.97%</td><td><span class="badge b-k">決算</span></td><td class="reason-text">アパレル。好決算。インバウンド・内需消費回復</td></tr>
+            <tr><td class="rank-num">55</td><td class="stock-code">3315</td><td class="stock-name">日本コークス工業</td><td class="rate">+3.96%</td><td><span class="badge b-n">材料なし</span></td><td class="reason-text">明確な材料なし</td></tr>
+            <tr><td class="rank-num">56</td><td class="stock-code">3788</td><td class="stock-name">GMOグローバルサイン</td><td class="rate">+3.95%</td><td><span class="badge b-t">テーマ</span></td><td class="reason-text">電子認証・セキュリティ。AI・DXテーマ連動</td></tr>
+            <tr><td class="rank-num">57</td><td class="stock-code">3661</td><td class="stock-name">エムアップHD</td><td class="rate">+3.94%</td><td><span class="badge b-r">連想</span></td><td class="reason-text">コンテンツ配信SaaS。情報通信セクター連想</td></tr>
+            <tr><td class="rank-num">58</td><td class="stock-code">4552</td><td class="stock-name">JCRファーマ</td><td class="rate">+3.83%</td><td><span class="badge b-r">連想</span></td><td class="reason-text">バイオ医薬。医薬品セクター全般高の連想</td></tr>
+            <tr><td class="rank-num">59</td><td class="stock-code">6209</td><td class="stock-name">リケンNPR</td><td class="rate">+3.80%</td><td><span class="badge b-k">決算</span></td><td class="reason-text">ピストンリング・自動車部品。好決算</td></tr>
+            <tr><td class="rank-num">60</td><td class="stock-code">6533</td><td class="stock-name">Orchestra Holdings</td><td class="rate">+3.79%</td><td><span class="badge b-r">連想</span></td><td class="reason-text">デジタルマーケ。情報通信セクター連想</td></tr>
+            <tr><td class="rank-num">61</td><td class="stock-code">6866</td><td class="stock-name">日置電機</td><td class="rate">+3.78%</td><td><span class="badge b-r">連想</span></td><td class="reason-text">電子計測器。電気機器セクター高の連想</td></tr>
+            <tr><td class="rank-num">62</td><td class="stock-code">6047</td><td class="stock-name">Gunosy</td><td class="rate">+3.73%</td><td><span class="badge b-n">材料なし</span></td><td class="reason-text">ニュースアプリ。明確な材料なし</td></tr>
+            <tr><td class="rank-num">63</td><td class="stock-code">4523</td><td class="stock-name">エーザイ</td><td class="rate">+3.71%</td><td><span class="badge b-r">連想</span></td><td class="reason-text">医薬品。アルツハイマー薬への期待。医薬品セクター連想</td></tr>
+            <tr><td class="rank-num">64</td><td class="stock-code">3983</td><td class="stock-name">オロ</td><td class="rate">+3.64%</td><td><span class="badge b-r">連想</span></td><td class="reason-text">ERPクラウドSaaS。情報通信セクター連想</td></tr>
+            <tr><td class="rank-num">65</td><td class="stock-code">9279</td><td class="stock-name">ギフトホールディングス</td><td class="rate">+3.64%</td><td><span class="badge b-k">決算</span></td><td class="reason-text">ラーメンFC。好決算。外食需要回復</td></tr>
+            <tr><td class="rank-num">66</td><td class="stock-code">3635</td><td class="stock-name">コーエーテクモHD</td><td class="rate">+3.61%</td><td><span class="badge b-r">連想</span></td><td class="reason-text">ゲーム・コンテンツIP。エンタメセクター連想</td></tr>
+            <tr><td class="rank-num">67</td><td class="stock-code">4568</td><td class="stock-name">第一三共</td><td class="rate">+3.58%</td><td><span class="badge b-t">テーマ</span></td><td class="reason-text"><strong>ADC（抗体薬物複合体）のグローバル展開期待</strong>。医薬品テーマ牽引役</td></tr>
+            <tr><td class="rank-num">68</td><td class="stock-code">7453</td><td class="stock-name">良品計画</td><td class="rate">+3.55%</td><td><span class="badge b-k">決算</span></td><td class="reason-text">好決算。<strong>訪日客・国内消費のダブル追い風で採算改善確認</strong></td></tr>
+            <tr><td class="rank-num">69</td><td class="stock-code">7384</td><td class="stock-name">プロクレアHD</td><td class="rate">+3.55%</td><td><span class="badge b-r">連想</span></td><td class="reason-text">地銀。金利上昇・利ざや拡大期待の連想</td></tr>
+            <tr><td class="rank-num">70</td><td class="stock-code">9274</td><td class="stock-name">KPPグループHD</td><td class="rate">+3.54%</td><td><span class="badge b-r">連想</span></td><td class="reason-text">紙・梱包資材商社。卸売セクター連想</td></tr>
+            <tr><td class="rank-num">71</td><td class="stock-code">4776</td><td class="stock-name">サイボウズ</td><td class="rate">+3.53%</td><td><span class="badge b-t">テーマ</span></td><td class="reason-text">グループウェアSaaS。AI・DXテーマ連動</td></tr>
+            <tr><td class="rank-num">72</td><td class="stock-code">4971</td><td class="stock-name">メック</td><td class="rate">+3.52%</td><td><span class="badge b-r">連想</span></td><td class="reason-text">プリント基板用薬品。電子部品セクター連想</td></tr>
+            <tr><td class="rank-num">73</td><td class="stock-code">2207</td><td class="stock-name">meito</td><td class="rate">+3.50%</td><td><span class="badge b-k">決算</span></td><td class="reason-text">菓子メーカー。好決算。食料品セクター</td></tr>
+            <tr><td class="rank-num">74</td><td class="stock-code">8141</td><td class="stock-name">新光商事</td><td class="rate">+3.50%</td><td><span class="badge b-r">連想</span></td><td class="reason-text">電子部品商社。電気機器セクター連想</td></tr>
+            <tr><td class="rank-num">75</td><td class="stock-code">4684</td><td class="stock-name">オービック</td><td class="rate">+3.48%</td><td><span class="badge b-k">決算</span></td><td class="reason-text">ERPクラウド。<strong>好決算で高収益SaaSモデルの継続確認</strong></td></tr>
+            <tr><td class="rank-num">76</td><td class="stock-code">2267</td><td class="stock-name">ヤクルト本社</td><td class="rate">+3.48%</td><td><span class="badge b-k">決算</span></td><td class="reason-text">乳酸菌飲料。好決算。海外・国内双方で需要堅調</td></tr>
+            <tr><td class="rank-num">77</td><td class="stock-code">4661</td><td class="stock-name">オリエンタルランド</td><td class="rate">+3.47%</td><td><span class="badge b-k">決算</span></td><td class="reason-text">ディズニーリゾート。<strong>好決算でインバウンド・国内消費回復を確認</strong></td></tr>
+            <tr><td class="rank-num">78</td><td class="stock-code">3762</td><td class="stock-name">テクマトリックス</td><td class="rate">+3.47%</td><td><span class="badge b-r">連想</span></td><td class="reason-text">セキュリティ・ITソリューション。情報通信セクター連想</td></tr>
+            <tr><td class="rank-num">79</td><td class="stock-code">8308</td><td class="stock-name">りそなHD</td><td class="rate">+3.46%</td><td><span class="badge b-r">連想</span></td><td class="reason-text">大手銀行。金利上昇・利ざや拡大期待の連想</td></tr>
+            <tr><td class="rank-num">80</td><td class="stock-code">3046</td><td class="stock-name">ジンズHD</td><td class="rate">+3.44%</td><td><span class="badge b-k">決算</span></td><td class="reason-text">眼鏡チェーン。好決算。インバウンド・内需消費回復</td></tr>
+            <tr><td class="rank-num">81</td><td class="stock-code">8604</td><td class="stock-name">野村HD</td><td class="rate">+3.41%</td><td><span class="badge b-r">連想</span></td><td class="reason-text">大手証券。株式市場活況・金利上昇テーマ連想</td></tr>
+            <tr><td class="rank-num">82</td><td class="stock-code">4565</td><td class="stock-name">ネクセラファーマ</td><td class="rate">+3.36%</td><td><span class="badge b-r">連想</span></td><td class="reason-text">バイオ。医薬品セクター全般高の連想</td></tr>
+            <tr><td class="rank-num">83</td><td class="stock-code">4432</td><td class="stock-name">ウイングアーク1st</td><td class="rate">+3.35%</td><td><span class="badge b-r">連想</span></td><td class="reason-text">データ分析SaaS。情報通信セクター連想</td></tr>
+            <tr><td class="rank-num">84</td><td class="stock-code">4503</td><td class="stock-name">アステラス製薬</td><td class="rate">+3.35%</td><td><span class="badge b-r">連想</span></td><td class="reason-text">医薬品大手。医薬品セクター全般高の連想</td></tr>
+            <tr><td class="rank-num">85</td><td class="stock-code">8377</td><td class="stock-name">ほくほくFG</td><td class="rate">+3.33%</td><td><span class="badge b-r">連想</span></td><td class="reason-text">地銀。金利上昇・利ざや拡大期待の連想</td></tr>
+            <tr><td class="rank-num">86</td><td class="stock-code">7818</td><td class="stock-name">トランザクション</td><td class="rate">+3.32%</td><td><span class="badge b-n">材料なし</span></td><td class="reason-text">ノベルティ・販促グッズ。明確な材料なし</td></tr>
+            <tr><td class="rank-num">87</td><td class="stock-code">8614</td><td class="stock-name">東洋証券</td><td class="rate">+3.30%</td><td><span class="badge b-r">連想</span></td><td class="reason-text">証券会社。株式市場活況・野村HD連動の連想</td></tr>
+            <tr><td class="rank-num">88</td><td class="stock-code">8362</td><td class="stock-name">福井銀行</td><td class="rate">+3.29%</td><td><span class="badge b-r">連想</span></td><td class="reason-text">地銀。金利上昇・利ざや拡大期待の連想</td></tr>
+            <tr><td class="rank-num">89</td><td class="stock-code">4180</td><td class="stock-name">Appier Group</td><td class="rate">+3.23%</td><td><span class="badge b-t">テーマ</span></td><td class="reason-text">AIマーケティングSaaS。AI実装テーマ直結</td></tr>
+            <tr><td class="rank-num">90</td><td class="stock-code">8056</td><td class="stock-name">BIPROGY</td><td class="rate">+3.23%</td><td><span class="badge b-k">決算</span></td><td class="reason-text">ITサービス。好決算で金融向けDX案件拡大確認</td></tr>
+            <tr><td class="rank-num">91</td><td class="stock-code">262A</td><td class="stock-name">インターメスティック</td><td class="rate">+3.22%</td><td><span class="badge b-k">決算</span></td><td class="reason-text">眼鏡チェーン。好決算。インバウンド・内需消費回復</td></tr>
+            <tr><td class="rank-num">92</td><td class="stock-code">9682</td><td class="stock-name">DTS</td><td class="rate">+3.21%</td><td><span class="badge b-r">連想</span></td><td class="reason-text">ITサービス。情報通信セクター連想</td></tr>
+            <tr><td class="rank-num">93</td><td class="stock-code">9742</td><td class="stock-name">アイネス</td><td class="rate">+3.21%</td><td><span class="badge b-r">連想</span></td><td class="reason-text">公共向けITサービス。情報通信セクター連想</td></tr>
+            <tr><td class="rank-num">94</td><td class="stock-code">4462</td><td class="stock-name">石原ケミカル</td><td class="rate">+3.21%</td><td><span class="badge b-r">連想</span></td><td class="reason-text">表面処理薬品。電子部品・化学セクター連想</td></tr>
+            <tr><td class="rank-num">95</td><td class="stock-code">7729</td><td class="stock-name">東京精密</td><td class="rate">+3.18%</td><td><span class="badge b-r">連想</span></td><td class="reason-text">半導体検査・計測機器。TSMC前夜の半導体残存期待</td></tr>
+            <tr><td class="rank-num">96</td><td class="stock-code">5032</td><td class="stock-name">ANYCOLOR</td><td class="rate">+3.17%</td><td><span class="badge b-t">テーマ</span></td><td class="reason-text">VTuberコンテンツIP。エンタメ・コンテンツテーマ</td></tr>
+            <tr><td class="rank-num">97</td><td class="stock-code">9022</td><td class="stock-name">東海旅客鉄道</td><td class="rate">+3.15%</td><td><span class="badge b-k">決算</span></td><td class="reason-text">JR東海。<strong>好決算でインバウンド・観光消費回復を確認</strong></td></tr>
+            <tr><td class="rank-num">98</td><td class="stock-code">9336</td><td class="stock-name">大栄環境</td><td class="rate">+3.08%</td><td><span class="badge b-k">決算</span></td><td class="reason-text">産業廃棄物処理。好決算。インフラ需要堅調</td></tr>
+            <tr><td class="rank-num">99</td><td class="stock-code">9535</td><td class="stock-name">広島ガス</td><td class="rate">+3.08%</td><td><span class="badge b-r">連想</span></td><td class="reason-text">都市ガス。電気・ガスセクター連想</td></tr>
+            <tr><td class="rank-num">100</td><td class="stock-code">2327</td><td class="stock-name">日鉄ソリューションズ</td><td class="rate">+3.07%</td><td><span class="badge b-r">連想</span></td><td class="reason-text">ITサービス。情報通信セクター連想</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div id="standard" class="tab-panel">
+        <table class="rank-table">
+          <thead><tr><th>#</th><th>コード</th><th>銘柄</th><th>上昇率</th><th>判定</th><th>理由</th></tr></thead>
+          <tbody>
+            <tr><td class="rank-num">1</td><td class="stock-code">4351</td><td class="stock-name">山田再生系</td><td class="rate">+26.70%</td><td><span class="badge b-n">材料なし</span></td><td class="reason-text">債権回収。低時価総額・低位株。出来高急増も明確な材料なし</td></tr>
+            <tr><td class="rank-num">2</td><td class="stock-code">7719</td><td class="stock-name">東京衡機</td><td class="rate">+18.52%</td><td><span class="badge b-n">材料なし</span></td><td class="reason-text">計量器。ストップ高水準も明確な材料なし。投機的動き</td></tr>
+            <tr><td class="rank-num">3</td><td class="stock-code">7477</td><td class="stock-name">ムラキ</td><td class="rate">+18.34%</td><td><span class="badge b-n">材料なし</span></td><td class="reason-text">工具卸。明確な材料なし</td></tr>
+            <tr><td class="rank-num">4</td><td class="stock-code">4840</td><td class="stock-name">トライアイズ</td><td class="rate">+17.46%</td><td><span class="badge b-n">材料なし</span></td><td class="reason-text">サービス業。低位株。明確な材料なし</td></tr>
+            <tr><td class="rank-num">5</td><td class="stock-code">1418</td><td class="stock-name">インターライフHD</td><td class="rate">+16.46%</td><td><span class="badge b-k">決算</span></td><td class="reason-text">内装工事。<strong>好決算で建設需要の旺盛さ確認</strong></td></tr>
+            <tr><td class="rank-num">6</td><td class="stock-code">6969</td><td class="stock-name">松尾電機</td><td class="rate">+12.57%</td><td><span class="badge b-r">連想</span></td><td class="reason-text">コンデンサー。<strong>太陽誘電好決算を受けた電子部品連想買い</strong></td></tr>
+            <tr><td class="rank-num">7</td><td class="stock-code">6347</td><td class="stock-name">プラコー</td><td class="rate">+10.86%</td><td><span class="badge b-n">材料なし</span></td><td class="reason-text">プラスチック機械。明確な材料なし</td></tr>
+            <tr><td class="rank-num">8</td><td class="stock-code">5699</td><td class="stock-name">イボキン</td><td class="rate">+9.94%</td><td><span class="badge b-k">決算</span></td><td class="reason-text">廃棄物処理・鉄スクラップ。好決算</td></tr>
+            <tr><td class="rank-num">9</td><td class="stock-code">6227</td><td class="stock-name">AIメカテック</td><td class="rate">+9.35%</td><td><span class="badge b-t">テーマ</span></td><td class="reason-text"><strong>半導体・FPD製造装置。TSMC決算前夜の期待残存＋14日からの継続</strong></td></tr>
+            <tr><td class="rank-num">10</td><td class="stock-code">1407</td><td class="stock-name">ウエストHD</td><td class="rate">+8.99%</td><td><span class="badge b-k">決算</span></td><td class="reason-text"><strong>太陽光設置の好決算＋再エネ政策追い風</strong></td></tr>
+            <tr><td class="rank-num">11</td><td class="stock-code">6217</td><td class="stock-name">津田駒工業</td><td class="rate">+8.00%</td><td><span class="badge b-r">連想</span></td><td class="reason-text">繊維・工作機械。機械セクター全般高の連想</td></tr>
+            <tr><td class="rank-num">12</td><td class="stock-code">6736</td><td class="stock-name">サン電子</td><td class="rate">+7.99%</td><td><span class="badge b-k">決算</span></td><td class="reason-text">組込みソフト・IoT。好決算</td></tr>
+            <tr><td class="rank-num">13</td><td class="stock-code">2351</td><td class="stock-name">ASJ</td><td class="rate">+7.50%</td><td><span class="badge b-n">材料なし</span></td><td class="reason-text">ITサービス。明確な材料なし</td></tr>
+            <tr><td class="rank-num">14</td><td class="stock-code">6072</td><td class="stock-name">地盤ネットHD</td><td class="rate">+7.36%</td><td><span class="badge b-t">テーマ</span></td><td class="reason-text">地盤調査DX。建設DX・インフラ整備テーマ</td></tr>
+            <tr><td class="rank-num">15</td><td class="stock-code">9941</td><td class="stock-name">太洋物産</td><td class="rate">+7.12%</td><td><span class="badge b-n">材料なし</span></td><td class="reason-text">食品卸。明確な材料なし</td></tr>
+            <tr><td class="rank-num">16</td><td class="stock-code">1435</td><td class="stock-name">robot home</td><td class="rate">+7.08%</td><td><span class="badge b-t">テーマ</span></td><td class="reason-text">不動産テック。DXテーマ連動</td></tr>
+            <tr><td class="rank-num">17</td><td class="stock-code">7859</td><td class="stock-name">アルメディオ</td><td class="rate">+6.97%</td><td><span class="badge b-n">材料なし</span></td><td class="reason-text">光学フィルム。明確な材料なし</td></tr>
+            <tr><td class="rank-num">18</td><td class="stock-code">3560</td><td class="stock-name">ほぼ日</td><td class="rate">+6.17%</td><td><span class="badge b-k">決算</span></td><td class="reason-text">手帳・コンテンツ。好決算。ブランドコンテンツの安定収益確認</td></tr>
+            <tr><td class="rank-num">19</td><td class="stock-code">4434</td><td class="stock-name">サーバーワークス</td><td class="rate">+5.78%</td><td><span class="badge b-t">テーマ</span></td><td class="reason-text">AWSクラウド。国産クラウド・DXテーマ連動</td></tr>
+            <tr><td class="rank-num">20</td><td class="stock-code">8746</td><td class="stock-name">unbanked</td><td class="rate">+5.49%</td><td><span class="badge b-n">材料なし</span></td><td class="reason-text">証券業。明確な材料なし</td></tr>
+            <tr><td class="rank-num">21</td><td class="stock-code">8617</td><td class="stock-name">光世証券</td><td class="rate">+5.33%</td><td><span class="badge b-r">連想</span></td><td class="reason-text">証券会社。株式市場活況・証券セクター連想</td></tr>
+            <tr><td class="rank-num">22</td><td class="stock-code">254A</td><td class="stock-name">AIフュージョンCG</td><td class="rate">+5.01%</td><td><span class="badge b-t">テーマ</span></td><td class="reason-text">AI関連ファンド。AIテーマ連動</td></tr>
+            <tr><td class="rank-num">23</td><td class="stock-code">7819</td><td class="stock-name">粧美堂</td><td class="rate">+4.95%</td><td><span class="badge b-k">決算</span></td><td class="reason-text">化粧品・雑貨卸。好決算</td></tr>
+            <tr><td class="rank-num">24</td><td class="stock-code">2782</td><td class="stock-name">セリア</td><td class="rate">+4.92%</td><td><span class="badge b-k">決算</span></td><td class="reason-text">100円ショップ。<strong>好決算で内需消費・インバウンド需要の回復確認</strong></td></tr>
+            <tr><td class="rank-num">25</td><td class="stock-code">3891</td><td class="stock-name">ニッポン高度紙工業</td><td class="rate">+4.77%</td><td><span class="badge b-t">テーマ</span></td><td class="reason-text">コンデンサー用セパレータ。<strong>太陽誘電好決算の電子部品連想＋EV電池材料テーマ</strong></td></tr>
+            <tr><td class="rank-num">26</td><td class="stock-code">4651</td><td class="stock-name">サニックスHD</td><td class="rate">+4.76%</td><td><span class="badge b-r">連想</span></td><td class="reason-text">再エネ・害虫駆除。ウエストHD上昇の連想</td></tr>
+            <tr><td class="rank-num">27</td><td class="stock-code">3796</td><td class="stock-name">いい生活</td><td class="rate">+4.72%</td><td><span class="badge b-t">テーマ</span></td><td class="reason-text">不動産テックSaaS。DXテーマ連動</td></tr>
+            <tr><td class="rank-num">28</td><td class="stock-code">4125</td><td class="stock-name">三和油化工業</td><td class="rate">+4.69%</td><td><span class="badge b-k">決算</span></td><td class="reason-text">廃油再生。好決算</td></tr>
+            <tr><td class="rank-num">29</td><td class="stock-code">3686</td><td class="stock-name">ディー・エル・イー</td><td class="rate">+4.63%</td><td><span class="badge b-n">材料なし</span></td><td class="reason-text">コンテンツ制作。明確な材料なし</td></tr>
+            <tr><td class="rank-num">30</td><td class="stock-code">3926</td><td class="stock-name">オープンドア</td><td class="rate">+4.62%</td><td><span class="badge b-n">材料なし</span></td><td class="reason-text">旅行メディア。明確な材料なし</td></tr>
+            <tr><td class="rank-num">31</td><td class="stock-code">3392</td><td class="stock-name">デリカフーズHD</td><td class="rate">+4.55%</td><td><span class="badge b-k">決算</span></td><td class="reason-text">カット野菜卸。好決算。外食・中食需要堅調</td></tr>
+            <tr><td class="rank-num">32</td><td class="stock-code">3913</td><td class="stock-name">GreenBee</td><td class="rate">+4.52%</td><td><span class="badge b-n">材料なし</span></td><td class="reason-text">ポイント交換。明確な材料なし</td></tr>
+            <tr><td class="rank-num">33</td><td class="stock-code">3437</td><td class="stock-name">特殊電極</td><td class="rate">+4.27%</td><td><span class="badge b-r">連想</span></td><td class="reason-text">溶接材料。金属製品セクター連想</td></tr>
+            <tr><td class="rank-num">34</td><td class="stock-code">3798</td><td class="stock-name">ULSグループ</td><td class="rate">+4.24%</td><td><span class="badge b-t">テーマ</span></td><td class="reason-text">DXコンサル。ベイカレント連想でコンサルDXテーマ連動</td></tr>
+            <tr><td class="rank-num">35</td><td class="stock-code">4716</td><td class="stock-name">日本オラクル</td><td class="rate">+4.21%</td><td><span class="badge b-t">テーマ</span></td><td class="reason-text"><strong>クラウド・AI基盤。米オラクルのAI事業拡大継続の連動</strong></td></tr>
+            <tr><td class="rank-num">36</td><td class="stock-code">6524</td><td class="stock-name">湖北工業</td><td class="rate">+4.20%</td><td><span class="badge b-r">連想</span></td><td class="reason-text">電子部品。太陽誘電好決算の電子部品連想</td></tr>
+            <tr><td class="rank-num">37</td><td class="stock-code">2903</td><td class="stock-name">シノブフーズ</td><td class="rate">+4.10%</td><td><span class="badge b-k">決算</span></td><td class="reason-text">惣菜製造。好決算。中食需要回復</td></tr>
+            <tr><td class="rank-num">38</td><td class="stock-code">7060</td><td class="stock-name">ギークス</td><td class="rate">+4.06%</td><td><span class="badge b-t">テーマ</span></td><td class="reason-text">IT人材マッチング。DXテーマ連動</td></tr>
+            <tr><td class="rank-num">39</td><td class="stock-code">4119</td><td class="stock-name">日本ピグメントHD</td><td class="rate">+4.01%</td><td><span class="badge b-r">連想</span></td><td class="reason-text">顔料・塗料。化学セクター連想</td></tr>
+            <tr><td class="rank-num">40</td><td class="stock-code">9854</td><td class="stock-name">愛眼</td><td class="rate">+3.98%</td><td><span class="badge b-r">連想</span></td><td class="reason-text">眼鏡チェーン。ジンズHD好決算の連想</td></tr>
+            <tr><td class="rank-num">41</td><td class="stock-code">3858</td><td class="stock-name">ユビキタスAI</td><td class="rate">+3.95%</td><td><span class="badge b-t">テーマ</span></td><td class="reason-text">組込みAI。AIテーマ連動</td></tr>
+            <tr><td class="rank-num">42</td><td class="stock-code">3944</td><td class="stock-name">古林紙工</td><td class="rate">+3.93%</td><td><span class="badge b-n">材料なし</span></td><td class="reason-text">段ボール製造。明確な材料なし</td></tr>
+            <tr><td class="rank-num">43</td><td class="stock-code">4970</td><td class="stock-name">東洋合成工業</td><td class="rate">+3.84%</td><td><span class="badge b-t">テーマ</span></td><td class="reason-text"><strong>フォトレジスト原料。半導体材料テーマ残存</strong></td></tr>
+            <tr><td class="rank-num">44</td><td class="stock-code">4512</td><td class="stock-name">わかもと製薬</td><td class="rate">+3.83%</td><td><span class="badge b-r">連想</span></td><td class="reason-text">医薬品。医薬品セクター全般高の連想</td></tr>
+            <tr><td class="rank-num">45</td><td class="stock-code">7564</td><td class="stock-name">ワークマン</td><td class="rate">+3.78%</td><td><span class="badge b-k">決算</span></td><td class="reason-text">作業着・アウトドアウェア。<strong>好決算で内需消費回復を確認</strong></td></tr>
+            <tr><td class="rank-num">46</td><td class="stock-code">4673</td><td class="stock-name">川崎地質</td><td class="rate">+3.74%</td><td><span class="badge b-k">決算</span></td><td class="reason-text">地盤調査・コンサル。好決算。インフラ工事需要旺盛</td></tr>
+            <tr><td class="rank-num">47</td><td class="stock-code">4685</td><td class="stock-name">菱友システムズ</td><td class="rate">+3.65%</td><td><span class="badge b-r">連想</span></td><td class="reason-text">ITサービス。情報通信セクター連想</td></tr>
+            <tr><td class="rank-num">48</td><td class="stock-code">6864</td><td class="stock-name">エヌエフHD</td><td class="rate">+3.62%</td><td><span class="badge b-r">連想</span></td><td class="reason-text">電子計測器。電気機器セクター連想</td></tr>
+            <tr><td class="rank-num">49</td><td class="stock-code">5283</td><td class="stock-name">高見澤</td><td class="rate">+3.61%</td><td><span class="badge b-n">材料なし</span></td><td class="reason-text">卸売業。明確な材料なし</td></tr>
+            <tr><td class="rank-num">50</td><td class="stock-code">365A</td><td class="stock-name">伊澤タオル</td><td class="rate">+3.58%</td><td><span class="badge b-r">連想</span></td><td class="reason-text">タオル製造。繊維製品セクター連想</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div id="growth" class="tab-panel">
+        <table class="rank-table">
+          <thead><tr><th>#</th><th>コード</th><th>銘柄</th><th>上昇率</th><th>判定</th><th>理由</th></tr></thead>
+          <tbody>
+            <tr><td class="rank-num">1</td><td class="stock-code">3558</td><td class="stock-name">ジェイドグループ</td><td class="rate">+24.48%</td><td><span class="badge b-k">決算</span></td><td class="reason-text">アパレルEC。<strong>好決算で黒字転換確認</strong></td></tr>
+            <tr><td class="rank-num">2</td><td class="stock-code">7375</td><td class="stock-name">リファインバースG</td><td class="rate">+23.16%</td><td><span class="badge b-t">テーマ</span></td><td class="reason-text"><strong>繊維リサイクル。サーキュラーエコノミー政策テーマで急騰</strong></td></tr>
+            <tr><td class="rank-num">3</td><td class="stock-code">338A</td><td class="stock-name">ZenmuTech</td><td class="rate">+20.31%</td><td><span class="badge b-k">決算</span></td><td class="reason-text">セキュリティSaaS。<strong>好決算で黒字化確認</strong></td></tr>
+            <tr><td class="rank-num">4</td><td class="stock-code">4371</td><td class="stock-name">コアコンセプト・T</td><td class="rate">+19.33%</td><td><span class="badge b-k">決算</span></td><td class="reason-text">製造業DX・IoT。<strong>好決算で急騰。製造現場のDX需要旺盛</strong></td></tr>
+            <tr><td class="rank-num">5</td><td class="stock-code">135A</td><td class="stock-name">VRAIN Solution</td><td class="rate">+17.23%</td><td><span class="badge b-t">テーマ</span></td><td class="reason-text">AI人材マッチング。AIテーマ連動</td></tr>
+            <tr><td class="rank-num">6</td><td class="stock-code">4490</td><td class="stock-name">ビザスク</td><td class="rate">+17.01%</td><td><span class="badge b-n">材料なし</span></td><td class="reason-text">エキスパートネットワーク。出来高極少。明確な材料なし</td></tr>
+            <tr><td class="rank-num">7</td><td class="stock-code">205A</td><td class="stock-name">ロゴスHD</td><td class="rate">+14.74%</td><td><span class="badge b-k">決算</span></td><td class="reason-text">建設・リフォーム。好決算</td></tr>
+            <tr><td class="rank-num">8</td><td class="stock-code">281A</td><td class="stock-name">インフォメティス</td><td class="rate">+14.71%</td><td><span class="badge b-t">テーマ</span></td><td class="reason-text"><strong>電力AI・エネルギーDX。再エネ政策テーマ＋AI実装テーマ</strong></td></tr>
+            <tr><td class="rank-num">9</td><td class="stock-code">2195</td><td class="stock-name">アミタHD</td><td class="rate">+12.13%</td><td><span class="badge b-t">テーマ</span></td><td class="reason-text">サーキュラーエコノミー。リファインバースG急騰の連想</td></tr>
+            <tr><td class="rank-num">10</td><td class="stock-code">4015</td><td class="stock-name">ペイクラウドHD</td><td class="rate">+11.50%</td><td><span class="badge b-t">テーマ</span></td><td class="reason-text">決済SaaS。GMO-PG好決算の連想＋フィンテックテーマ</td></tr>
+            <tr><td class="rank-num">11</td><td class="stock-code">4478</td><td class="stock-name">フリー</td><td class="rate">+10.71%</td><td><span class="badge b-r">連想</span></td><td class="reason-text">会計SaaS。<strong>マネーフォワード急騰を受けた同業連想買い</strong></td></tr>
+            <tr><td class="rank-num">12</td><td class="stock-code">325A</td><td class="stock-name">TENTIAL</td><td class="rate">+10.64%</td><td><span class="badge b-k">決算</span></td><td class="reason-text">スポーツウェア・リカバリー。好決算</td></tr>
+            <tr><td class="rank-num">13</td><td class="stock-code">304A</td><td class="stock-name">フォルシア</td><td class="rate">+10.16%</td><td><span class="badge b-k">決算</span></td><td class="reason-text">SaaS・情報通信。好決算</td></tr>
+            <tr><td class="rank-num">14</td><td class="stock-code">5134</td><td class="stock-name">POPER</td><td class="rate">+8.93%</td><td><span class="badge b-t">テーマ</span></td><td class="reason-text">教育DX・塾管理SaaS。DXテーマ連動</td></tr>
+            <tr><td class="rank-num">15</td><td class="stock-code">4069</td><td class="stock-name">BlueMemе</td><td class="rate">+8.84%</td><td><span class="badge b-t">テーマ</span></td><td class="reason-text">生成AIシステム開発。AI実装テーマ直結</td></tr>
+            <tr><td class="rank-num">16</td><td class="stock-code">446A</td><td class="stock-name">ノースサンド</td><td class="rate">+8.63%</td><td><span class="badge b-r">連想</span></td><td class="reason-text">DXコンサル。ベイカレント好決算の連想</td></tr>
+            <tr><td class="rank-num">17</td><td class="stock-code">177A</td><td class="stock-name">コージンバイオ</td><td class="rate">+8.12%</td><td><span class="badge b-r">連想</span></td><td class="reason-text">バイオ試薬。医薬品セクター連想</td></tr>
+            <tr><td class="rank-num">18</td><td class="stock-code">4259</td><td class="stock-name">エクサウィザーズ</td><td class="rate">+7.69%</td><td><span class="badge b-t">テーマ</span></td><td class="reason-text">AI実装DX。AI全般テーマ連動</td></tr>
+            <tr><td class="rank-num">19</td><td class="stock-code">7777</td><td class="stock-name">スリー・ディー・M</td><td class="rate">+7.66%</td><td><span class="badge b-n">材料なし</span></td><td class="reason-text">医療機器。明確な材料なし</td></tr>
+            <tr><td class="rank-num">20</td><td class="stock-code">5578</td><td class="stock-name">ARアドバンストT</td><td class="rate">+7.21%</td><td><span class="badge b-k">決算</span></td><td class="reason-text">ITサービス。<strong>好決算で上方修正確認</strong></td></tr>
+            <tr><td class="rank-num">21</td><td class="stock-code">5575</td><td class="stock-name">Globee</td><td class="rate">+6.57%</td><td><span class="badge b-t">テーマ</span></td><td class="reason-text">外国人採用DX。DXテーマ連動</td></tr>
+            <tr><td class="rank-num">22</td><td class="stock-code">4419</td><td class="stock-name">FinatextHD</td><td class="rate">+6.48%</td><td><span class="badge b-t">テーマ</span></td><td class="reason-text">金融インフラSaaS。フィンテックテーマ連動</td></tr>
+            <tr><td class="rank-num">23</td><td class="stock-code">4075</td><td class="stock-name">ブレインズT</td><td class="rate">+6.17%</td><td><span class="badge b-t">テーマ</span></td><td class="reason-text">AIアルゴリズム。AI実装テーマ連動</td></tr>
+            <tr><td class="rank-num">24</td><td class="stock-code">278A</td><td class="stock-name">Terra Drone</td><td class="rate">+6.01%</td><td><span class="badge b-t">テーマ</span></td><td class="reason-text"><strong>ドローン測量・インフラ点検。防衛・インフラ安全テーマ</strong></td></tr>
+            <tr><td class="rank-num">25</td><td class="stock-code">9556</td><td class="stock-name">INTLOOP</td><td class="rate">+6.00%</td><td><span class="badge b-r">連想</span></td><td class="reason-text">ITコンサル人材。ベイカレント好決算の連想</td></tr>
+            <tr><td class="rank-num">26</td><td class="stock-code">3692</td><td class="stock-name">FFRIセキュリティ</td><td class="rate">+5.93%</td><td><span class="badge b-t">テーマ</span></td><td class="reason-text">サイバーセキュリティ。AI・安全保障テーマ</td></tr>
+            <tr><td class="rank-num">27</td><td class="stock-code">4884</td><td class="stock-name">クリングルファーマ</td><td class="rate">+5.88%</td><td><span class="badge b-r">連想</span></td><td class="reason-text">バイオ医薬。医薬品セクター連想</td></tr>
+            <tr><td class="rank-num">28</td><td class="stock-code">369A</td><td class="stock-name">エータイ</td><td class="rate">+5.78%</td><td><span class="badge b-r">連想</span></td><td class="reason-text">DX人材・コンサル。ベイカレント連想</td></tr>
+            <tr><td class="rank-num">29</td><td class="stock-code">4579</td><td class="stock-name">ラクオリア創薬</td><td class="rate">+5.77%</td><td><span class="badge b-r">連想</span></td><td class="reason-text">創薬バイオ。医薬品セクター連想</td></tr>
+            <tr><td class="rank-num">30</td><td class="stock-code">4192</td><td class="stock-name">スパイダープラス</td><td class="rate">+5.69%</td><td><span class="badge b-t">テーマ</span></td><td class="reason-text">建設DX。インフラ・建設DXテーマ連動</td></tr>
+            <tr><td class="rank-num">31</td><td class="stock-code">4417</td><td class="stock-name">GSX</td><td class="rate">+5.65%</td><td><span class="badge b-t">テーマ</span></td><td class="reason-text">サイバーセキュリティ。AI・安全保障テーマ連動</td></tr>
+            <tr><td class="rank-num">32</td><td class="stock-code">269A</td><td class="stock-name">Sapeet</td><td class="rate">+5.60%</td><td><span class="badge b-n">材料なし</span></td><td class="reason-text">AIコーチング。明確な材料なし</td></tr>
+            <tr><td class="rank-num">33</td><td class="stock-code">478A</td><td class="stock-name">フツパー</td><td class="rate">+5.58%</td><td><span class="badge b-t">テーマ</span></td><td class="reason-text">画像AI・製造業DX。AI実装テーマ連動</td></tr>
+            <tr><td class="rank-num">34</td><td class="stock-code">456A</td><td class="stock-name">HUMAN MADE</td><td class="rate">+5.45%</td><td><span class="badge b-r">連想</span></td><td class="reason-text">古着・ストリートウェア。内需消費テーマ連想</td></tr>
+            <tr><td class="rank-num">35</td><td class="stock-code">3680</td><td class="stock-name">ホットリンク</td><td class="rate">+5.38%</td><td><span class="badge b-r">連想</span></td><td class="reason-text">SNS分析。情報通信セクター連想</td></tr>
+            <tr><td class="rank-num">36</td><td class="stock-code">4588</td><td class="stock-name">オンコリスバイオ</td><td class="rate">+5.35%</td><td><span class="badge b-r">連想</span></td><td class="reason-text">がんウイルス療法。医薬品セクター連想</td></tr>
+            <tr><td class="rank-num">37</td><td class="stock-code">245A</td><td class="stock-name">INGS</td><td class="rate">+5.34%</td><td><span class="badge b-k">決算</span></td><td class="reason-text">スポーツ小売。好決算</td></tr>
+            <tr><td class="rank-num">38</td><td class="stock-code">4448</td><td class="stock-name">kubell</td><td class="rate">+5.19%</td><td><span class="badge b-t">テーマ</span></td><td class="reason-text">ビジネスチャットSaaS。DXテーマ連動</td></tr>
+            <tr><td class="rank-num">39</td><td class="stock-code">4165</td><td class="stock-name">プレイド</td><td class="rate">+5.15%</td><td><span class="badge b-t">テーマ</span></td><td class="reason-text">CX・データ分析SaaS。AI・データ連動</td></tr>
+            <tr><td class="rank-num">40</td><td class="stock-code">9159</td><td class="stock-name">W TOKYO</td><td class="rate">+5.13%</td><td><span class="badge b-r">連想</span></td><td class="reason-text">古着買取。内需消費テーマ連想</td></tr>
+            <tr><td class="rank-num">41</td><td class="stock-code">332A</td><td class="stock-name">ミーク</td><td class="rate">+5.03%</td><td><span class="badge b-t">テーマ</span></td><td class="reason-text">製造業DXSaaS。AI実装・製造DXテーマ連動</td></tr>
+            <tr><td class="rank-num">42</td><td class="stock-code">421A</td><td class="stock-name">ムービン・SC</td><td class="rate">+4.87%</td><td><span class="badge b-r">連想</span></td><td class="reason-text">DX人材紹介。ベイカレント連想</td></tr>
+            <tr><td class="rank-num">43</td><td class="stock-code">2160</td><td class="stock-name">ジーエヌアイグループ</td><td class="rate">+4.87%</td><td><span class="badge b-r">連想</span></td><td class="reason-text">中国医薬品。医薬品セクター連想</td></tr>
+            <tr><td class="rank-num">44</td><td class="stock-code">5592</td><td class="stock-name">くすりの窓口</td><td class="rate">+4.83%</td><td><span class="badge b-t">テーマ</span></td><td class="reason-text">薬局DX・オンライン服薬。ヘルスケアDXテーマ</td></tr>
+            <tr><td class="rank-num">45</td><td class="stock-code">147A</td><td class="stock-name">ソラコム</td><td class="rate">+4.82%</td><td><span class="badge b-t">テーマ</span></td><td class="reason-text">IoT通信プラットフォーム。AI・IoTテーマ連動</td></tr>
+            <tr><td class="rank-num">46</td><td class="stock-code">438A</td><td class="stock-name">インフキュリオン</td><td class="rate">+4.77%</td><td><span class="badge b-t">テーマ</span></td><td class="reason-text">組込み金融SaaS。フィンテックテーマ連動</td></tr>
+            <tr><td class="rank-num">47</td><td class="stock-code">7078</td><td class="stock-name">INCLUSIVE HD</td><td class="rate">+4.75%</td><td><span class="badge b-n">材料なし</span></td><td class="reason-text">デジタルメディア。明確な材料なし</td></tr>
+            <tr><td class="rank-num">48</td><td class="stock-code">460A</td><td class="stock-name">BRANU</td><td class="rate">+4.67%</td><td><span class="badge b-t">テーマ</span></td><td class="reason-text">建設DXSaaS。DXテーマ連動</td></tr>
+            <tr><td class="rank-num">49</td><td class="stock-code">9554</td><td class="stock-name">AVic</td><td class="rate">+4.12%</td><td><span class="badge b-r">連想</span></td><td class="reason-text">ITコンサル。情報通信セクター連想</td></tr>
+            <tr><td class="rank-num">50</td><td class="stock-code">4397</td><td class="stock-name">チームスピリット</td><td class="rate">+4.04%</td><td><span class="badge b-t">テーマ</span></td><td class="reason-text">勤怠・経費管理SaaS。DXテーマ連動</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </div><!-- /content -->
+
+  <!-- SIDEBAR -->
+  <div class="sidebar">
+      <div class="stat-block-title">MARKET SUMMARY</div>
+      <div class="stat-row"><span class="stat-label">日経平均</span><span class="stat-val up">+上昇</span></div>
+      <div class="stat-row"><span class="stat-label">決算主導</span><span class="stat-val up">IT・コンサル高</span></div>
+      <div class="stat-row"><span class="stat-label">医薬品</span><span class="stat-val up">全般高</span></div>
+      <div class="stat-row"><span class="stat-label">半導体装置</span><span class="stat-val blue">一服・様子見</span></div>
+    </div>
+
+    <div class="market-card">
+      <div class="market-label">判定内訳 — プライム (3%以上 100銘柄)</div>
+      <div class="market-bar-row"><span class="bar-label">決算</span><div class="bar-track"><div class="bar-fill" style="width:36%;background:#60a5fa;"></div></div><span class="bar-count">36</span></div>
+      <div class="market-bar-row"><span class="bar-label">テーマ</span><div class="bar-track"><div class="bar-fill" style="width:28%;background:#3b82f6;"></div></div><span class="bar-count">28</span></div>
+      <div class="market-bar-row"><span class="bar-label">連想買い</span><div class="bar-track"><div class="bar-fill" style="width:24%;background:#a78bfa;"></div></div><span class="bar-count">24</span></div>
+      <div class="market-bar-row"><span class="bar-label">材料なし</span><div class="bar-track"><div class="bar-fill" style="width:12%;background:#f59e0b;"></div></div><span class="bar-count">12</span></div>
+    </div>
+
+    <div class="market-card">
+      <div class="market-label">判定内訳 — スタンダード (3%以上 50銘柄)</div>
+      <div class="market-bar-row"><span class="bar-label">材料なし</span><div class="bar-track"><div class="bar-fill" style="width:24%;background:#f59e0b;"></div></div><span class="bar-count">12</span></div>
+      <div class="market-bar-row"><span class="bar-label">決算</span><div class="bar-track"><div class="bar-fill" style="width:22%;background:#60a5fa;"></div></div><span class="bar-count">11</span></div>
+      <div class="market-bar-row"><span class="bar-label">テーマ</span><div class="bar-track"><div class="bar-fill" style="width:22%;background:#3b82f6;"></div></div><span class="bar-count">11</span></div>
+      <div class="market-bar-row"><span class="bar-label">連想買い</span><div class="bar-track"><div class="bar-fill" style="width:32%;background:#a78bfa;"></div></div><span class="bar-count">16</span></div>
+    </div>
+
+    <div class="market-card">
+      <div class="market-label">判定内訳 — グロース (3%以上 50銘柄)</div>
+      <div class="market-bar-row"><span class="bar-label">テーマ</span><div class="bar-track"><div class="bar-fill" style="width:40%;background:#3b82f6;"></div></div><span class="bar-count">20</span></div>
+      <div class="market-bar-row"><span class="bar-label">決算</span><div class="bar-track"><div class="bar-fill" style="width:22%;background:#60a5fa;"></div></div><span class="bar-count">11</span></div>
+      <div class="market-bar-row"><span class="bar-label">連想買い</span><div class="bar-track"><div class="bar-fill" style="width:22%;background:#a78bfa;"></div></div><span class="bar-count">11</span></div>
+      <div class="market-bar-row"><span class="bar-label">材料なし</span><div class="bar-track"><div class="bar-fill" style="width:16%;background:#f59e0b;"></div></div><span class="bar-count">8</span></div>
+    </div>
+
+    <div class="caution-block">
+      <div class="caution-title">明日の注目イベント</div>
+      <div class="caution-text">
+        <strong style="color:#b91c1c;">TSMC 1Q決算説明会（4/16）</strong><br>
+        台湾時間14:00。1Q売上高は前年比+35%で過去最高確認済み。焦点は<strong>2026年通期ガイダンス維持・上方修正</strong>と設備投資計画への言及。好結果なら半導体装置株が再び動き出す。
+      </div>
+    </div>
+
+  </div><!-- /sidebar -->
+</div><!-- /main -->
+
+<footer>
+  <p>本サイトは個人の情報整理目的で作成したものです。投資の推奨・勧誘を目的とするものではありません。投資判断はご自身の責任でお願いします。</p>
+  <p style="margin-top:6px;">© 2026 JP-STOCK RADAR &nbsp;|&nbsp; Powered by GitHub Pages</p>
+</footer>
+
+<script>
+function switchTab(id, el) {
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  el.classList.add('active');
+}
+</script>
+</body>
+</html>
