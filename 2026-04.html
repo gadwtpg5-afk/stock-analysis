@@ -15,7 +15,6 @@
   --text: #1a1d21;
   --muted: #6b7280;
   --accent: #1d4ed8;
-  --up: #dc2626;
 }
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body { background: var(--bg); color: var(--text); font-family: 'Noto Sans JP', sans-serif; font-size: 14px; line-height: 1.6; }
@@ -24,7 +23,7 @@ a { color: inherit; text-decoration: none; }
 header { background: var(--surface); border-bottom: 1px solid var(--border); padding: 0 24px; }
 .header-inner { max-width: 800px; margin: 0 auto; height: 54px; display: flex; align-items: center; justify-content: space-between; }
 .site-name { font-family: 'IBM Plex Mono', monospace; font-size: 14px; font-weight: 600; color: var(--accent); letter-spacing: .06em; }
-.nav-back { font-size: 12px; color: var(--muted); display: flex; align-items: center; gap: 4px; }
+.nav-back { font-size: 12px; color: var(--muted); }
 .nav-back:hover { color: var(--accent); }
 
 .hero { background: var(--surface); border-bottom: 1px solid var(--border); padding: 32px 24px 28px; }
@@ -46,7 +45,6 @@ header { background: var(--surface); border-bottom: 1px solid var(--border); pad
 }
 .section-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
 
-/* 日付カード */
 .day-link {
   display: flex;
   align-items: center;
@@ -87,7 +85,7 @@ footer { border-top: 1px solid var(--border); padding: 20px 24px; text-align: ce
   <div class="section-label">日別レポート</div>
 
   <!-- 新しい日付ほど上に追加 -->
-  <a href="2026-04-14.html" class="day-link">
+  <a href="2026-04/14.html" class="day-link">
     <div>
       <div class="day-date">04月14日（火）</div>
       <div class="day-meta">半導体・AI・非鉄全面高 / TSMC 1Q決算前夜</div>
@@ -96,7 +94,8 @@ footer { border-top: 1px solid var(--border); padding: 20px 24px; text-align: ce
   </a>
 
   <!--
-  <a href="2026-04-15.html" class="day-link">
+  15日を追加するときはこのブロックをコピペして上に追加
+  <a href="2026-04/15.html" class="day-link">
     <div>
       <div class="day-date">04月15日（水）</div>
       <div class="day-meta">コメント</div>
