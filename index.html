@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JP-STOCK RADAR — 日本株 値上がり分析</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=IBM+Plex+Mono:wght@400;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0d0f12;
+  --surface: #161a20;
+  --surface2: #1e242c;
+  --border: #2a3040;
+  --text: #e8ecf0;
+  --muted: #6b7585;
+  --accent-blue: #3b82f6;
+  --up: #f87171;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: var(--bg); color: var(--text); font-family: 'Noto Sans JP', sans-serif; font-size: 14px; line-height: 1.6; }
+a { color: inherit; text-decoration: none; }
+
+header { border-bottom: 1px solid var(--border); padding: 0 24px; }
+.header-inner { max-width: 800px; margin: 0 auto; height: 56px; display: flex; align-items: center; }
+.site-name { font-family: 'IBM Plex Mono', monospace; font-size: 15px; font-weight: 600; color: var(--accent-blue); letter-spacing: .06em; }
+
+.hero { padding: 40px 24px 32px; border-bottom: 1px solid var(--border); }
+.hero-inner { max-width: 800px; margin: 0 auto; }
+.hero h1 { font-size: 26px; font-weight: 700; margin-bottom: 8px; }
+.hero p { color: var(--muted); font-size: 13px; }
+
+.list-wrap { max-width: 800px; margin: 0 auto; padding: 28px 24px; }
+.list-label { font-family: 'IBM Plex Mono', monospace; font-size: 10px; letter-spacing: .14em; color: var(--muted); text-transform: uppercase; margin-bottom: 14px; display: flex; align-items: center; gap: 8px; }
+.list-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+
+.report-link {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 18px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  margin-bottom: 8px;
+  transition: border-color .15s, background .15s;
+}
+.report-link:hover { border-color: var(--accent-blue); background: var(--surface2); }
+.report-date { font-family: 'IBM Plex Mono', monospace; font-size: 13px; font-weight: 600; color: var(--accent-blue); }
+.report-meta { font-size: 12px; color: var(--muted); margin-top: 3px; }
+.report-arrow { color: var(--muted); font-size: 16px; }
+.report-link:hover .report-arrow { color: var(--accent-blue); }
+
+footer { border-top: 1px solid var(--border); padding: 20px 24px; text-align: center; font-size: 11px; color: var(--muted); }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <span class="site-name">JP-STOCK RADAR</span>
+  </div>
+</header>
+
+<div class="hero">
+  <div class="hero-inner">
+    <h1>日本株 値上がり分析</h1>
+    <p>プライム・スタンダード・グロース 各市場の値上がり上位50銘柄を毎営業日分析。上昇理由の4分類判定と注目テーマを整理しています。</p>
+  </div>
+</div>
+
+<div class="list-wrap">
+  <div class="list-label">レポート一覧</div>
+
+  <!-- 新しい日付ほど上に追加していく -->
+  <a href="2026-04-14.html" class="report-link">
+    <div>
+      <div class="report-date">2026-04-14</div>
+      <div class="report-meta">半導体・AI・非鉄全面高 / TSMC 1Q決算前夜</div>
+    </div>
+    <div class="report-arrow">→</div>
+  </a>
+
+  <!-- 次の日はここに追加
+  <a href="2026-04-15.html" class="report-link">
+    <div>
+      <div class="report-date">2026-04-15</div>
+      <div class="report-meta">コメント</div>
+    </div>
+    <div class="report-arrow">→</div>
+  </a>
+  -->
+
+</div>
+
+<footer>
+  <p>本サイトは個人の情報整理目的で作成したものです。投資の推奨・勧誘を目的とするものではありません。</p>
+  <p style="margin-top:6px;">© 2026 JP-STOCK RADAR &nbsp;|&nbsp; Powered by GitHub Pages</p>
+</footer>
+</body>
+</html>
